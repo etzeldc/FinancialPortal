@@ -267,18 +267,18 @@
     <Content Include="Views\Household\Edit.cshtml" />
     <Content Include="Views\Shared\InvitePartial.cshtml" />
     <Content Include="Views\Shared\AddTransactionPartial.cshtml" />
-    <Content Include="Views\Household\BankAccountPartial.cshtml" />
-    <Content Include="Views\Household\BudgetPartial.cshtml" />
-    <Content Include="Views\Household\BudgetItemPartial.cshtml" />
-    <Content Include="Views\Household\NotificationsPartial.cshtml" />
-    <Content Include="Views\Household\TransactionPartial.cshtml" />
-    <Content Include="Views\Household\EditBankPartial.cshtml" />
-    <Content Include="Views\Household\EditBudgetPartial.cshtml" />
-    <Content Include="Views\Household\EditItemPartial.cshtml" />
-    <Content Include="Views\Household\EditTransactionPartial.cshtml" />
-    <Content Include="Views\Household\AddBankPartial.cshtml" />
-    <Content Include="Views\Household\AddBudgetPartial.cshtml" />
-    <Content Include="Views\Household\AddItemPartial.cshtml" />
+    <Content Include="Views\Shared\BankAccountPartial.cshtml" />
+    <Content Include="Views\Shared\BudgetPartial.cshtml" />
+    <Content Include="Views\Shared\BudgetItemPartial.cshtml" />
+    <Content Include="Views\Shared\NotificationsPartial.cshtml" />
+    <Content Include="Views\Shared\TransactionPartial.cshtml" />
+    <Content Include="Views\Shared\EditBankPartial.cshtml" />
+    <Content Include="Views\Shared\EditBudgetPartial.cshtml" />
+    <Content Include="Views\Shared\EditItemPartial.cshtml" />
+    <Content Include="Views\Shared\EditTransactionPartial.cshtml" />
+    <Content Include="Views\Shared\AddBankPartial.cshtml" />
+    <Content Include="Views\Shared\AddBudgetPartial.cshtml" />
+    <Content Include="Views\Shared\AddItemPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
