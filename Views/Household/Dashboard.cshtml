@@ -1,0 +1,57 @@
+﻿@using FinancialPortal.Models;
+
+@model FinancialPortal.Models.Household
+
+
+<h2>Dashboard</h2>
+
+@*--DASHBOARD INFO, MAYBE A GRAPH--*@
+<div>
+    <h4>Household</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Model.Name
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Greeting)
+        </dt>
+
+        <dd>
+            @Model.Greeting
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Established)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Established)
+        </dd>
+
+    </dl>
+</div>
+
+@*--INVITE A FRIEND PARTIAL MODAL--*@
+@*@Html.Partial("InvitePartial")*@
+@*--ADD TRANSACTION PARTIAL MODAL--*@
+@*@Html.Partial("AddTransactionPartial")*@
+@*--BANK ACCOUNT INDEX PARTIAL (box/card/pane)--*@
+@*@Html.Partial("BankAccountPartial")*@
+@*--BUDGET CATEGORY INDEX PARTIAL (box/card/pane)--
+    --NESTED BUDGET ITEM INDEX PARTIAL--*@
+@*@Html.Partial("BudgetPartial")*@
+@*--NOTIFICATIONS INDEX PARTIAL / Timeline (box/card/pane)--*@
+@*@Html.Partial("NotificationsPartial")*@
+@*--TRANSACTIONS INDEX PARTIAL (box/card/pane)--*@
+@*@Html.Partial("TransactionPartial")*@
+
+@*--MEMBERS INDEX (already using HouseholdViewModel)--*@
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+</p>

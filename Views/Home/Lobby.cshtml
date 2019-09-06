@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Lobby";
+}
+
+<h2>Lobby</h2>
+
+<div class="row">
+    <div class="col-xs-4 col-xs-offset-1">
+        @Html.ActionLink("Create Household", "Create", "Household", null, new { @class = "btn btn-lg btn-primary" })
+    </div>
+    <div class="col-xs-4 col-xs-offset-2">
+        @Html.ActionLink("Join Household", "Join", "Household", null, new { @class = "btn btn-lg btn-primary" })
+    </div>
+</div>
