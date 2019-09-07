@@ -72,8 +72,8 @@ namespace FinancialPortal.Helpers
                     new Household
                     {
                         Name = SeededHouseName,
-                        Greeting = WebConfigurationManager.AppSettings[Settings.SeededHouseGreeting.ToString()],
-                        Established = DateTime.Now
+                        Greeting = ReadKeyValue(Settings.SeededHouseGreeting),
+                        Established = DateTime.Now,
                     });
             Db.SaveChanges();
         }
@@ -111,7 +111,7 @@ namespace FinancialPortal.Helpers
                     StartingBalance = 1000.00,
                     CurrentBalance = 1000.00,
                     LowBalance = 100.00,
-                    Name = "Wells Fargo Checking",
+                    Name = "Wells Fargo",
                     Description = "Seeded Checking Account",
                     Address1 = "3375 Robinhood Road",
                     Address2 = "",
@@ -129,7 +129,7 @@ namespace FinancialPortal.Helpers
                     StartingBalance = 2400.00,
                     CurrentBalance = 2400.00,
                     LowBalance = 250.00,
-                    Name = "Wells Fargo Savings",
+                    Name = "Wells Fargo",
                     Description = "Seeded Savings Account",
                     Address1 = "3375 Robinhood Road",
                     Address2 = "",
@@ -177,17 +177,17 @@ namespace FinancialPortal.Helpers
             var now = DateTime.Now;
             Db.BudgetItems.AddOrUpdate(
                 t => t.Name,
-                new Models.BudgetItem { Name = "Gas", BudgetId = utilitiesBudgetId, Created = now, Target = 100.00},
-                new Models.BudgetItem { Name = "Electric", BudgetId = utilitiesBudgetId, Created = now, Target = 100.00 },
-                new Models.BudgetItem { Name = "WaterSewage", BudgetId = utilitiesBudgetId, Created = now, Target = 80.00 },
-                new Models.BudgetItem { Name = "Internet", BudgetId = utilitiesBudgetId, Created = now, Target = 100.00 },
-                new Models.BudgetItem { Name = "Fuel", BudgetId = autoBudgetId, Created = now, Target = 200.00 },
-                new Models.BudgetItem { Name = "Repairs", BudgetId = autoBudgetId, Created = now, Target = 200.00 },
-                new Models.BudgetItem { Name = "RentMortgage", BudgetId = livingBudgetId, Created = now, Target = 750.00 },
-                new Models.BudgetItem { Name = "Clothing", BudgetId = livingBudgetId, Created = now, Target = 75.00 },
-                new Models.BudgetItem { Name = "Groceries", BudgetId = livingBudgetId, Created = now, Target = 200.00 },
-                new Models.BudgetItem { Name = "Entertainment", BudgetId = otherBudgetId, Created = now, Target = 100.00 },
-                new Models.BudgetItem { Name = "Gym Membership", BudgetId = otherBudgetId, Created = now, Target = 60.00 }
+                new Models.BudgetItem { Name = Enumerations.BudgetItem.Gas.ToString(), BudgetId = utilitiesBudgetId, Created = now, Target = 100.00},
+                new Models.BudgetItem { Name = Enumerations.BudgetItem.Electric.ToString(), BudgetId = utilitiesBudgetId, Created = now, Target = 100.00 },
+                new Models.BudgetItem { Name = Enumerations.BudgetItem.WaterSewage.ToString(), BudgetId = utilitiesBudgetId, Created = now, Target = 80.00 },
+                new Models.BudgetItem { Name = Enumerations.BudgetItem.Internet.ToString(), BudgetId = utilitiesBudgetId, Created = now, Target = 100.00 },
+                new Models.BudgetItem { Name = Enumerations.BudgetItem.Fuel.ToString(), BudgetId = autoBudgetId, Created = now, Target = 200.00 },
+                new Models.BudgetItem { Name = Enumerations.BudgetItem.Repairs.ToString(), BudgetId = autoBudgetId, Created = now, Target = 200.00 },
+                new Models.BudgetItem { Name = Enumerations.BudgetItem.RentMortgage.ToString(), BudgetId = livingBudgetId, Created = now, Target = 750.00 },
+                new Models.BudgetItem { Name = Enumerations.BudgetItem.Clothing.ToString(), BudgetId = livingBudgetId, Created = now, Target = 75.00 },
+                new Models.BudgetItem { Name = Enumerations.BudgetItem.Groceries.ToString(), BudgetId = livingBudgetId, Created = now, Target = 200.00 },
+                new Models.BudgetItem { Name = Enumerations.BudgetItem.Entertainment.ToString(), BudgetId = otherBudgetId, Created = now, Target = 100.00 },
+                new Models.BudgetItem { Name = Enumerations.BudgetItem.GymMembership.ToString(), BudgetId = otherBudgetId, Created = now, Target = 60.00 }
             );
             Db.SaveChanges();
         }
@@ -275,7 +275,9 @@ namespace FinancialPortal.Helpers
         {
             var data = userData.Split(SplitCharacter);
             var email = data[0];
+            Logger.LogInfo($"{Db.Households.AsNoTracking().FirstOrDefault(h => h.Name == SeededHouseName).Id}");
             var houseId = Db.Households.AsNoTracking().FirstOrDefault(h => h.Name == SeededHouseName).Id;
+            Logger.LogInfo($"{houseId}");
             if (!Db.Users.Any(u => u.Email == email))
             {
                 UserManager.Create(new ApplicationUser
@@ -286,9 +288,10 @@ namespace FinancialPortal.Helpers
                     FirstName = data[1],
                     LastName = data[2],
                     DisplayName = data[3],
-                    AvatarUrl = WebConfigurationManager.AppSettings[Settings.DefaultAvatar.ToString()]
-                }, WebConfigurationManager.AppSettings[Settings.DefaultPassword.ToString()]);
+                    AvatarUrl = ReadKeyValue(Settings.DefaultAvatar)
+                }, ReadKeyValue(Settings.DefaultPassword));
             }
+            Db.SaveChanges();
         }
         private void SeedRole(Role role)
         {

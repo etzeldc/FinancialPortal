@@ -42,10 +42,13 @@ namespace FinancialPortal.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    var creator = db.Users.Find(User.Identity.GetUserId());
                     household.Established = DateTime.Now;
+                    household.Members.Add(creator);
                     db.Households.Add(household);
                     db.SaveChanges();
                 }
+                // REDIRECT TO A WIZARD SETUP HERE
                 return RedirectToAction("Dashboard", "Household", new { household.Id });
             }
             catch

@@ -1,42 +1,266 @@
 ﻿@using FinancialPortal.Models;
+@using Microsoft.AspNet.Identity;
+
 
 @model FinancialPortal.Models.Household
 
-
-<h2>Dashboard</h2>
-
-@*--DASHBOARD INFO, MAYBE A GRAPH--*@
-<div>
-    <h4>Household</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Model.Name
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Greeting)
-        </dt>
-
-        <dd>
-            @Model.Greeting
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Established)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Established)
-        </dd>
-
-    </dl>
+@{
+    var db = new ApplicationDbContext();
+    var user = db.Users.Find(User.Identity.GetUserId());
+}
+<div class="row">
+    @*  ADD MODAL / PUT INTO INVITE PARTIAL  *@
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-5 col-md-4">
+                        <div class="icon-big text-center icon-warning">
+                            <i class="nc-icon nc-single-02 text-warning"></i>
+                        </div>
+                    </div>
+                    <div class="col-7 col-md-8">
+                        <div class="numbers">
+                            <p class="card-category">Invite</p>
+                            <p class="card-title">Members</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                    <i class="fa fa-send"></i> Send Invitation
+                </div>
+            </div>
+        </div>
+    </div>
+    @*  ADD MODAL / PUT INTO TRANSACTION PARTIAL  *@
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-5 col-md-4">
+                        <div class="icon-big text-center icon-warning">
+                            <i class="nc-icon nc-money-coins text-success"></i>
+                        </div>
+                    </div>
+                    <div class="col-7 col-md-8">
+                        <div class="numbers">
+                            <p class="card-category">Add</p>
+                            <p class="card-title">Transaction</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                    <i class="fa fa-dollar"></i> Deposit / Withdrawal
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-5 col-md-4">
+                        <div class="icon-big text-center icon-warning">
+                            <i class="nc-icon nc-vector text-danger"></i>
+                        </div>
+                    </div>
+                    <div class="col-7 col-md-8">
+                        <div class="numbers">
+                            <p class="card-category">Errors</p>
+                            <p class="card-title">23
+                            <p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                    <i class="fa fa-clock-o"></i> In the last hour
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-5 col-md-4">
+                        <div class="icon-big text-center icon-warning">
+                            <i class="nc-icon nc-favourite-28 text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col-7 col-md-8">
+                        <div class="numbers">
+                            <p class="card-category">Followers</p>
+                            <p class="card-title">+45K
+                            <p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                    <i class="fa fa-refresh"></i> Update now
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-7 col-sm-6">
+        <div class="row">
+            <div class="col-md-12">
+                @*  BANK: PUT INTO BANK PARTIAL, GET RID OF SCROLLS  *@
+                <div class="card">
+                    <div class="card-header ">
+                        <h4 class="card-title">Bank Accounts</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" style="overflow:auto">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Info</th>
+                                        <th class="text-center">Balance</th>
+                                        <th class="text-center">Low Balance</th>
+                                        <th class="text-center">Added</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var bank in Model.BankAccounts)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @bank.AccountType.Type
+                                            </td>
+                                            <td>
+                                                @bank.Name<br />
+                                                @bank.Address1<br />
+                                                @bank.City, @bank.State @bank.Zip<br />
+                                                @bank.Phone
+                                            </td>
+                                            <td class="text-center">
+                                                @bank.CurrentBalance
+                                            </td>
+                                            <td class="text-center">
+                                                @bank.LowBalance
+                                            </td>
+                                            <td class="text-right">
+                                                @bank.Created.ToString("MM/dd/yyyy")
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @*  BUDGET AND ITS ITEMS  *@
+                <div class="card">
+                    <div class="card-header ">
+                        <h4 class="card-title">Budgets</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" style="overflow:auto">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Target</th>
+                                        <th class="text-center">Current</th>
+                                        <th class="text-center">Items</th>
+                                        <th class="text-right">Created</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var budget in Model.Budgets)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @budget.Name
+                                            </td>
+                                            <td class="text-center">
+                                                @budget.Target
+                                            </td>
+                                            <td class="text-center">
+                                                @budget.Actual
+                                            </td>
+                                            <td>
+                                                @foreach (var item in budget.BudgetItems)
+                                                {
+                                                    <div class="pull-left">
+                                                        @item.Name
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        @item.Actual
+                                                    </div>
+                                                    <br />
+                                                }
+                                            </td>
+                                            <td class="text-right">
+                                                @budget.Created.ToString("MM/dd/yyyy")
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">Graph</div>
+    </div>
+    <div class="col-md-5 col-sm-6">
+            <div class="row">
+                <div class="col-md-12">
+                    @*  TRANSACTIONS  *@
+                    <div class="card">
+                        <div class="card-header ">
+                            <h4 class="card-title">Transactions</h4>
+                        </div>
+                        <div class="card-body">
+                            @foreach (var transaction in db.Transactions.Where(t => t.Owner.HouseholdId == user.HouseholdId).OrderByDescending(n => n.Created))
+                            {
+                                @transaction.Owner.DisplayName @:paid @transaction.Amount on @transaction.Created.ToString("MM/dd/yyyy") for @transaction.Memo<br />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-md-12">
+                @*  NOTIFICATIONS  *@
+                <div class="card">
+                    <div class="card-header ">
+                        <h4 class="card-title">Notifications</h4>
+                    </div>
+                    <div class="card-body">
+                        @foreach (var notification in db.Notifications.Where(n => n.HouseholdId == user.HouseholdId).OrderByDescending(n => n.Created))
+                        {
+                            @notification.Body
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+@*--DASHBOARD INFO, MAYBE A GRAPH--*@
 @*--INVITE A FRIEND PARTIAL MODAL--*@
 @*@Html.Partial("InvitePartial")*@
 @*--ADD TRANSACTION PARTIAL MODAL--*@

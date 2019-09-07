@@ -14,7 +14,6 @@ namespace FinancialPortal.Models
         [StringLength(100)]
         public string Greeting { get; set; }
         public DateTime Established { get; set; }
-
         public virtual ICollection<ApplicationUser> Members { get; set; }
         public virtual ICollection<BankAccount> BankAccounts { get; set; }
         public virtual ICollection<Budget> Budgets {get; set;}

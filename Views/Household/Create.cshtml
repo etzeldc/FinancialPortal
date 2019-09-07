@@ -1,43 +1,60 @@
 ﻿@model FinancialPortal.Models.Household
 
 @{
-    ViewBag.Title = "Create";
+    Layout = "/Views/Shared/_SecondLayout.cshtml";
 }
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Household</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
+<div class="col-md-10 mr-auto ml-auto">
+    <div class="card card-login">
+        <div class="card-header">
+            <h3 class="header text-center">Create Household</h3>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Greeting, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Greeting, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Greeting, "", new { @class = "text-danger" })
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-home"></i>
+                        </span>
+                    </div>
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-comment"></i>
+                        </span>
+                    </div>
+                    @Html.EditorFor(model => model.Greeting, new { htmlAttributes = new { @class = "form-control", placeholder = "Greeting" } })
+                    @Html.ValidationMessageFor(model => model.Greeting, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
+            <div class="card-footer">
+                    <button type="submit" class="btn btn-danger btn-round btn-block mb-3">Create</button>
+            </div>
+        }
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+                <div class="card-footer">
+                    @Html.ActionLink("Back to Lobby", "Lobby", "Home")
+                </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
