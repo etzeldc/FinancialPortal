@@ -9,7 +9,7 @@ namespace FinancialPortal.Enumerations
     public enum State
     {
         [Description("Alabama")]
-        AL,
+        AL = 1,
         [Description("Alaska")]
         AK,
         [Description("Arkansas")]

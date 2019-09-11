@@ -1,0 +1,311 @@
+﻿@using FinancialPortal.Models;
+
+@model FinancialPortal.Models.DashboardViewModel
+
+@{
+    Layout = "/Views/Shared/_SecondLayout.cshtml";
+}
+
+<div class="col-md-10 mr-auto ml-auto">
+    @using (Html.BeginForm("Setup", "Household", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="wizard-container">
+            <div class="card card-wizard" data-color="primary" id="setup">
+                <div class="card-header text-center">
+                    <h3 class="card-title">
+                        Create Your Profile
+                    </h3>
+                    <h5 class="description">Just a few simple steps to setup up your household.</h5>
+                    <div class="wizard-navigation">
+                        <ul>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#bank" data-toggle="tab" role="tab">
+                                    BANK ACCOUNT
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#budget" data-toggle="tab" role="tab">
+                                    BUDGET TYPES
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#item" data-toggle="tab" role="tab">
+                                    BUDGET ITEMS
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#finish" data-toggle="tab" role="tab">
+                                    COMPLETE HOUSEHOLD
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="bank">
+                            <h5 class="info-text">Let's start by adding your Bank information.</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.bankAccount.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Bank Name" } })
+                                        @Html.ValidationMessageFor(model => model.bankAccount.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.bankAccount.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Description" } })
+                                        @Html.ValidationMessageFor(model => model.bankAccount.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.DropDownList("AccountType", EnumHelper.GetSelectList(typeof(FinancialPortal.Enumerations.AccountType)), "Select Account Type", new { @class = "form-control"})
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.bankAccount.StartingBalance, new { htmlAttributes = new { @class = "form-control", placeholder = "Starting Balance" } })
+                                        @Html.ValidationMessageFor(model => model.bankAccount.StartingBalance, "", new { @class = "text-danger" })
+                                        @*</div>
+                                            <div class="input-group">*@
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.bankAccount.LowBalance, new { htmlAttributes = new { @class = "form-control", placeholder = "Low Balance Warning Level" } })
+                                        @Html.ValidationMessageFor(model => model.bankAccount.LowBalance, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.bankAccount.Address1, new { htmlAttributes = new { @class = "form-control", placeholder = "Address1" } })
+                                        @Html.ValidationMessageFor(model => model.bankAccount.Address1, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.bankAccount.Address2, new { htmlAttributes = new { @class = "form-control", placeholder = "Address2" } })
+                                        @Html.ValidationMessageFor(model => model.bankAccount.Address2, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.bankAccount.City, new { htmlAttributes = new { @class = "form-control", placeholder = "City" } })
+                                        @Html.ValidationMessageFor(model => model.bankAccount.City, "", new { @class = "text-danger" })
+
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EnumDropDownListFor(model => Model.bankAccount.State, "State", htmlAttributes: new { @class = "form-control" })
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.bankAccount.Zip, new { htmlAttributes = new { @class = "form-control", placeholder = "Zip Code" } })
+                                        @Html.ValidationMessageFor(model => model.bankAccount.Zip, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.bankAccount.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone Number" } })
+                                        @Html.ValidationMessageFor(model => model.bankAccount.Phone, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="budget">
+                            <h5 class="info-text">Next, add a budget category.</h5>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.DropDownList("Budget", EnumHelper.GetSelectList(typeof(FinancialPortal.Enumerations.Budget)), "Select Budget Category", new { @class = "form-control" })
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.budget.Target, new { htmlAttributes = new { @class = "form-control", placeholder = "Target" } })
+                                        @Html.ValidationMessageFor(model => model.budget.Target, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.budget.Actual, new { htmlAttributes = new { @class = "form-control", placeholder = "Actual" } })
+                                        @Html.ValidationMessageFor(model => model.budget.Actual, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="item">
+                            <h5 class="info-text">And lastly, include items for each budget.</h5>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.DropDownList("Budget Item", EnumHelper.GetSelectList(typeof(FinancialPortal.Enumerations.BudgetItem)), "Select Budget Item", new { @class = "form-control" })
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.budgetItem.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Description" } })
+                                        @Html.ValidationMessageFor(model => model.budgetItem.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.budgetItem.Target, new { htmlAttributes = new { @class = "form-control", placeholder = "Target" } })
+                                        @Html.ValidationMessageFor(model => model.budgetItem.Target, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-home"></i>
+                                            </span>
+                                        </div>
+                                        @Html.EditorFor(model => model.budgetItem.Actual, new { htmlAttributes = new { @class = "form-control", placeholder = "Actual" } })
+                                        @Html.ValidationMessageFor(model => model.budgetItem.Actual, "", new { @class = "text-danger" })
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="finish">
+                            <h5 class="info-text">You're All Done!</h5>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-danger btn-round btn-block mb-3">Proceed to Dashboard</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="card-footer">
+                        <div class="pull-right">
+                            <input type='button' class='btn btn-next btn-fill btn-rose btn-wd' name='next' value='Next' />
+                            <input type='button' class='btn btn-finish btn-fill btn-rose btn-wd' name='finish' value='Finish' />
+                        </div>
+                        <div class="pull-left">
+                            <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>*@
+            </div>
+        </div>
+    }
+
+</div>
+<br />
+<br />
+<br />
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            // Initialise the wizard
+            demo.initWizard();
+            setTimeout(function () {
+                $('.card.card-wizard').addClass('active');
+            }, 600);
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+@*
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="card-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fa fa-home"></i>
+                    </span>
+                </div>
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fa fa-comment"></i>
+                    </span>
+                </div>
+                @Html.EditorFor(model => model.Greeting, new { htmlAttributes = new { @class = "form-control", placeholder = "Greeting" } })
+                @Html.ValidationMessageFor(model => model.Greeting, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="card-footer">
+                <button type="submit" class="btn btn-danger btn-round btn-block mb-3">Create</button>
+        </div>
+    }
+
+            <div class="card-footer">
+                @Html.ActionLink("Back to Lobby", "Lobby", "Home")
+            </div>
+*@

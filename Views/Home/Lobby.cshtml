@@ -1,25 +1,57 @@
-﻿
+﻿@model FinancialPortal.Models.Household
+
 @{
     Layout = "/Views/Shared/_SecondLayout.cshtml";
 }
 
-    <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="header text-center">Lobby</h3>
-            </div>
-            <div class="card-body text-center">
-                Welcome to your Financial Portal!<br />
-                To begin, join or create a household below.
+<div class="col-lg-4 col-md-6 ml-auto mr-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="header text-center">Lobby</h3>
+        </div>
+        <div class="card-body text-center">
+            Welcome to your Financial Portal!<br />
+            To begin, join or create a household below.
+        </div>
+        @using (Html.BeginForm("Create", "Household", FormMethod.Post))
+        {
+
+            @Html.AntiForgeryToken()
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-home"></i>
+                        </span>
+                    </div>
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-comment"></i>
+                        </span>
+                    </div>
+                    @Html.EditorFor(model => model.Greeting, new { htmlAttributes = new { @class = "form-control", placeholder = "Greeting" } })
+                    @Html.ValidationMessageFor(model => model.Greeting, "", new { @class = "text-danger" })
+                </div>
             </div>
             <div class="card-footer">
-                @Html.ActionLink("Create Household", "Create", "Household", null, new { @class = "btn btn-danger btn-round btn-block mb-3" })
+                @Html.ActionLink("Create Household", "Setup", "Household", null, new { @class = "btn btn-danger btn-round btn-block mb-3" })
             </div>
-            <div class="card-footer">
-                @Html.ActionLink("Join Household", "Join", "Household", null, new { @class = "btn btn-danger btn-round btn-block mb-3" })
-            </div>
+        }
+
+    <div class="text-center">--- OR ---</div><br />
+
+
+
+        <div class="card-footer">
+            @Html.ActionLink("Join Household", "Join", "Household", null, new { @class = "btn btn-danger btn-round btn-block mb-3" })
         </div>
     </div>
+</div>
 <br />
 <br />
 <br />

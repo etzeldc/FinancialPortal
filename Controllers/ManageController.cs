@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FinancialPortal.Models;
+using FinancialPortal.ViewModels;
 
 namespace FinancialPortal.Controllers
 {
@@ -215,9 +216,9 @@ namespace FinancialPortal.Controllers
 
         //
         // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
+        public ActionResult ChangePasswordPartial()
         {
-            return View();
+            return PartialView();
         }
 
         //
@@ -238,7 +239,7 @@ namespace FinancialPortal.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Settings", "Home", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
             return View(model);

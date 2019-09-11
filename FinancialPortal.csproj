@@ -182,29 +182,35 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AdminHelper.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\HouseHelper.cs" />
     <Compile Include="Helpers\Logger.cs" />
+    <Compile Include="Helpers\RoleHelper.cs" />
     <Compile Include="Helpers\SeedHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\BankAccount.cs" />
     <Compile Include="Models\Budget.cs" />
     <Compile Include="Models\BudgetItem.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\Exception.cs" />
     <Compile Include="Models\Household.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invitation.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="ViewModels\ManageViewModel.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\UpdateViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Avatars\default_avatar.jpeg" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\demo.css" />
     <Content Include="Content\paper-dashboard.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -219,6 +225,7 @@
     <Content Include="Scripts\bootstrap-tagsinput.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chartjs.min.js" />
+    <Content Include="Scripts\demo.js" />
     <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\jasny-bootstrap.min.js" />
     <Content Include="Scripts\jquery-jvectormap.js" />
@@ -228,6 +235,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\nouislider.min.js" />
+    <Content Include="Scripts\paper-dashboard.js" />
     <Content Include="Scripts\paper-dashboard.min.js" />
     <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
     <Content Include="Scripts\popper.min.js" />
@@ -267,7 +275,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Lobby.cshtml" />
-    <Content Include="Views\Household\Create.cshtml" />
+    <Content Include="Views\Household\Setup.cshtml" />
     <Content Include="Views\Household\Dashboard.cshtml" />
     <Content Include="Views\Household\Edit.cshtml" />
     <Content Include="Views\Shared\InvitePartial.cshtml" />
@@ -298,8 +306,13 @@
     <Content Include="fonts\nucleo-icons.ttf" />
     <Content Include="fonts\nucleo-icons.woff" />
     <Content Include="fonts\nucleo-icons.woff2" />
+    <Content Include="Content\paper-dashboard.scss" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_SecondLayout.cshtml" />
+    <Content Include="Views\Shared\CreateHousePartial.cshtml" />
+    <Content Include="Views\Home\Settings.cshtml" />
+    <Content Include="Views\Shared\UpdateUserPartial.cshtml" />
+    <Content Include="Views\Shared\ChangePasswordPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

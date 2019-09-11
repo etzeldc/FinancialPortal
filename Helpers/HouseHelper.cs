@@ -14,6 +14,11 @@ namespace FinancialPortal.Helpers
         private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
         private static ApplicationDbContext db = new ApplicationDbContext();
 
+        public string MyRole(string userId)
+        {
+            return userManager.GetRoles(userId).FirstOrDefault();
+        }
+
         //****************** WORK IN PROGRASS ******************\\
         //public void HouseNotification(Household oldHouse, Household newHouse)
         //{
@@ -41,5 +46,11 @@ namespace FinancialPortal.Helpers
         //}
         //****************** WORK IN PROGRASS ******************\\
 
+        
+        //public bool WizardCheck(Household household)
+        //{
+
+        //    if (household.BankAccounts.Count() == 0 && household.)
+        //}
     }
 }

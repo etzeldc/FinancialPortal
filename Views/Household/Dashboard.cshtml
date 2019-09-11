@@ -9,7 +9,7 @@
     var user = db.Users.Find(User.Identity.GetUserId());
 }
 <div class="row">
-    @*  ADD MODAL / PUT INTO INVITE PARTIAL  *@
+    @*  ADD MODAL / PUT INTO INVITE PARTIAL?  *@
     <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
             <div class="card-body ">
@@ -29,13 +29,13 @@
             </div>
             <div class="card-footer ">
                 <hr>
-                <div class="stats">
-                    <i class="fa fa-send"></i> Send Invitation
-                </div>
+                <button class="btn btn-danger btn-round btn-block" data-toggle="modal" data-target="#inviteAdd">
+                    Send Invitation
+                </button>
             </div>
         </div>
     </div>
-    @*  ADD MODAL / PUT INTO TRANSACTION PARTIAL  *@
+    @*  ADD MODAL / PUT INTO TRANSACTION PARTIAL?  *@
     <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
             <div class="card-body ">
@@ -55,34 +55,29 @@
             </div>
             <div class="card-footer ">
                 <hr>
-                <div class="stats">
-                    <i class="fa fa-dollar"></i> Deposit / Withdrawal
-                </div>
+                <button class="btn btn-danger btn-round btn-block" data-toggle="modal" data-target="#tranAdd">
+                    Deposit / Withdrawal
+                </button>
+
             </div>
         </div>
     </div>
+    @*  ADD MODALS / PUT INTO SEPARATE PARTIALS?  *@
     <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
-            <div class="card-body ">
+            <div class="card-body" style="padding-top:6.5px">
                 <div class="row">
-                    <div class="col-5 col-md-4">
-                        <div class="icon-big text-center icon-warning">
-                            <i class="nc-icon nc-vector text-danger"></i>
-                        </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-danger btn-round btn-block" data-toggle="modal" data-target="#bankAdd">
+                            Add Bank Account
+                        </button>
+                        <button class="btn btn-danger btn-round btn-block" data-toggle="modal" data-target="#budAdd">
+                            Add Budget Category
+                        </button>
+                        <button class="btn btn-danger btn-round btn-block" data-toggle="modal" data-target="#itemAdd">
+                            Add Budget Item
+                        </button>
                     </div>
-                    <div class="col-7 col-md-8">
-                        <div class="numbers">
-                            <p class="card-category">Errors</p>
-                            <p class="card-title">23
-                            <p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer ">
-                <hr>
-                <div class="stats">
-                    <i class="fa fa-clock-o"></i> In the last hour
                 </div>
             </div>
         </div>
@@ -235,7 +230,7 @@
                         <div class="card-body">
                             @foreach (var transaction in db.Transactions.Where(t => t.Owner.HouseholdId == user.HouseholdId).OrderByDescending(n => n.Created))
                             {
-                                @transaction.Owner.DisplayName @:paid @transaction.Amount on @transaction.Created.ToString("MM/dd/yyyy") for @transaction.Memo<br />
+                                @transaction.Owner.DisplayName @:paid $@transaction.Amount on @transaction.Created.ToString("MM/dd/yyyy") for @transaction.Memo.<br />
                             }
                         </div>
                     </div>

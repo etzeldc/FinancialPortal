@@ -7,55 +7,95 @@ using FinancialPortal.Models;
 using FinancialPortal.Helpers;
 using Microsoft.AspNet.Identity;
 using System.Net;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Threading.Tasks;
 
 namespace FinancialPortal.Controllers
 {
     public class HouseholdController : Controller
     {
+        private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(
+            new UserStore<ApplicationUser>(new ApplicationDbContext()));
         private ApplicationDbContext db = new ApplicationDbContext();
         private HouseHelper houseHelper = new HouseHelper();
 
-        // GET: Households
+        // GET: Household
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View();
         }
 
-        ////////// GET: Households/Dashboard/5
-        [Authorize]
-        public ActionResult Dashboard(int? id)
+        // POST: Household/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "Name,Greeting")] Household household)
         {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Household household = db.Households.Find(id);
-            if (household == null)
-                return HttpNotFound();
+            if (ModelState.IsValid)
+            {
+                household.Established = DateTime.Now;
+                db.Households.Add(household);
+                db.SaveChanges();
+                var user = db.Users.Find(User.Identity.GetUserId());
+                user.HouseholdId = household.Id;
+                db.SaveChanges();
+                userManager.RemoveFromRole(user.Id, "Lobbyist");
+                userManager.AddToRole(user.Id, "HeadOfHousehold");
+
+                await AdminHelper.ReauthorizeUserAsync(user);
+                return RedirectToAction("Setup", new { household.Id});
+            }
             return View(household);
         }
 
-        ////////// POST: Households/Create
+        // GET: Household/Setup
+        public ActionResult Setup()
+        {
+            return View();
+        }
+
+        ////////// POST: Household/Setup
         [HttpPost]
-        public ActionResult Create([Bind(Include = "Id,Name,Greeting")] Household household)
+        [ValidateAntiForgeryToken]
+        public ActionResult Setup(BankAccount bankAccount, Budget budget, BudgetItem budgetItem)
         {
             try
             {
+                var houseId = db.Users.Find(User.Identity.GetUserId()).Household.Id;
                 if (ModelState.IsValid)
                 {
-                    var creator = db.Users.Find(User.Identity.GetUserId());
-                    household.Established = DateTime.Now;
-                    household.Members.Add(creator);
-                    db.Households.Add(household);
+                    bankAccount.HouseholdId = houseId;
+                    db.BankAccounts.Add(bankAccount);
+
+                    budget.HouseholdId = houseId;
+                    db.Budgets.Add(budget);
+                    db.SaveChanges();
+
+                    budgetItem.BudgetId = budget.Id;
+                    db.BudgetItems.Add(budgetItem);
+
+                    var household = db.Households.Find(houseId);
+                    household.IsConfigured = true;
                     db.SaveChanges();
                 }
-                // REDIRECT TO A WIZARD SETUP HERE
-                return RedirectToAction("Dashboard", "Household", new { household.Id });
+                return RedirectToAction("Dashboard", "Household", new { houseId });
             }
             catch
             {
                 return RedirectToAction("Lobby", "Home");
             }
         }
+
+        ////////// GET: Households/Dashboard/5
+        [Authorize]
+        public ActionResult Dashboard()
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            if (user.HouseholdId == null)
+                return RedirectToAction("Lobby", "Home");
+            return View(user.Household);
+        }
+
 
         ////////// GET: Households/Edit/5
         public ActionResult Edit(int? id)
@@ -117,6 +157,10 @@ namespace FinancialPortal.Controllers
         }
 
         #region Partial Views
+        public ActionResult CreateHousePartial()
+        {
+            return PartialView();
+        }
         public ActionResult InvitePartial()
         {   /////MODAL\\\\\
             return PartialView();
@@ -180,11 +224,7 @@ namespace FinancialPortal.Controllers
         #endregion
 
         #region Trash
-        // GET: Households/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+    
 
         // GET: Households/Delete/5
         public ActionResult Delete(int id)

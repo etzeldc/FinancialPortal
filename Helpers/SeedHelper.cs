@@ -74,6 +74,7 @@ namespace FinancialPortal.Helpers
                         Name = SeededHouseName,
                         Greeting = ReadKeyValue(Settings.SeededHouseGreeting),
                         Established = DateTime.Now,
+                        IsConfigured = true
                     });
             Db.SaveChanges();
         }
@@ -177,7 +178,7 @@ namespace FinancialPortal.Helpers
             var now = DateTime.Now;
             Db.BudgetItems.AddOrUpdate(
                 t => t.Name,
-                new Models.BudgetItem { Name = Enumerations.BudgetItem.Gas.ToString(), BudgetId = utilitiesBudgetId, Created = now, Target = 100.00},
+                new Models.BudgetItem { Name = Enumerations.BudgetItem.Gas.ToString(), BudgetId = utilitiesBudgetId, Created = now, Target = 100.00 },
                 new Models.BudgetItem { Name = Enumerations.BudgetItem.Electric.ToString(), BudgetId = utilitiesBudgetId, Created = now, Target = 100.00 },
                 new Models.BudgetItem { Name = Enumerations.BudgetItem.WaterSewage.ToString(), BudgetId = utilitiesBudgetId, Created = now, Target = 80.00 },
                 new Models.BudgetItem { Name = Enumerations.BudgetItem.Internet.ToString(), BudgetId = utilitiesBudgetId, Created = now, Target = 100.00 },

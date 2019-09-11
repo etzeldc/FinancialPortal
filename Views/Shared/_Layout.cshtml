@@ -5,6 +5,7 @@
 @{
     var db = new ApplicationDbContext();
     var user = db.Users.Find(User.Identity.GetUserId());
+    var houseHelper = new HouseHelper();
 }
 
 <!DOCTYPE html>
@@ -48,7 +49,8 @@
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" class="collapsed">
                             <span>
-                                @user.FullName
+                                @user.FullName<br />
+                                @houseHelper.MyRole(user.Id)
                                 <b class="caret"></b>
                             </span>
                         </a>
@@ -56,15 +58,21 @@
                         <div class="collapse" id="collapseExample">
                             <ul class="nav">
                                 @*<li>
-                                    <a href="#">
-                                        <span class="sidebar-mini-icon">MP</span>
-                                        <span class="sidebar-normal">My Profile</span>
-                                    </a>
-                                </li>*@
+            <a href="#">
+                <span class="sidebar-mini-icon">MP</span>
+                <span class="sidebar-normal">My Profile</span>
+            </a>
+        </li>*@
                                 <li>
-                                    <a href="@Url.Action("Edit", "Household", new { Id = user.HouseholdId })">
+                                    <a href="@Url.Action("Edit", "Household" , new { Id = user.HouseholdId })">
                                         <i class="nc-icon nc-settings-gear-65"></i>
                                         <span class="sidebar-normal">Household Settings</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Settings", "Home", new { Id = user.Id })">
+                                        <i class="nc-icon nc-settings-gear-65"></i>
+                                        <span class="sidebar-normal">User Settings</span>
                                     </a>
                                 </li>
                             </ul>
@@ -143,7 +151,7 @@
                                 <span class="navbar-toggler-bar bar3"></span>
                             </button>
                         </div>
-                        <a class="navbar-brand" href="#">@Model.Name - "@Model.Greeting"</a>
+                        @*<a class="navbar-brand" href="#">@Model.Name - "@Model.Greeting"</a>*@
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -196,12 +204,6 @@
                 </div>
             </nav>
             <!-- End Navbar -->
-            <!-- <div class="panel-header">
-
-      <canvas id="bigDashboardChart"></canvas>
-
-
-    </div> -->
             <div class="content">
                 @RenderBody()
                 
@@ -690,8 +692,7 @@
     </div>
 
     @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)*@
+    @Scripts.Render("~/bundles/bootstrap")*@
     <!--   Core JS Files   -->
     <script src="~/Scripts/jquery.min.js"></script>
     <script src="~/Scripts/popper.min.js"></script>
@@ -732,3 +733,4 @@
     <script src="~/Scripts/paper-dashboard.min.js"></script>
 </body>
 </html>
+    @RenderSection("scripts", required: false)
